@@ -23,34 +23,19 @@ class TableViewController: UITableViewController, UISearchResultsUpdating {
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search something"
         definesPresentationContext = true
-        
+        filteredDataCity = arrayCity
     }
     
     
     // MARK: - Private instance methods
     
-    func searchBarIsEmpty() -> Bool {
-        // Returns true if the text is empty or nil
-        return searchController.searchBar.text?.isEmpty ?? true
-    }
-    
     func updateSearchResults(for searchController: UISearchController) {
-        filteredDataCity = arrayCity.filter({ (arrayCity: String) -> Bool in
-            if arrayCity.contains(searchController.searchBar.text!) {
-                return true
-            } else {
-                return false
-            }
-        })
+        guard let searchText = searchController.searchBar.text else { return }
+        filteredDataCity = searchText.isEmpty ? (arrayCity) : (arrayCity.filter({ (city) -> Bool in
+            return city.lowercased().contains(searchText.lowercased())
+        }))
         tableView.reloadData()
     }
-    
-    
-    func isFiltering() -> Bool {
-        return searchController.isActive && !searchBarIsEmpty()
-    }
-    
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -59,29 +44,14 @@ class TableViewController: UITableViewController, UISearchResultsUpdating {
     
     // MARK: - Table view data source
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //        if searchController.isActive {
-        if isFiltering() {
-            return filteredDataCity.count
-        } else {
-            return arrayCity.count
-        }
+        return filteredDataCity.count
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        //        if searchController.isActive {
-        if isFiltering() {
-            cell.textLabel?.text = filteredDataCity[indexPath.row]
-        } else {
-            cell.textLabel?.text = arrayCity[indexPath.row]
-        }
+        cell.textLabel?.text = filteredDataCity[indexPath.row]
         return cell
     }
     

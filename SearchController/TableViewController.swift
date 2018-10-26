@@ -10,7 +10,8 @@ import UIKit
 
 class TableViewController: UITableViewController, UISearchResultsUpdating {
     
-    let arrayCity = ["Hà Nội", "Sài Gòn", "Đà Nẵng", "Đà Lạt", "Ninh Bình"]
+    
+    var arrayCity = ["Hà Nội", "Sài Gòn", "Đà Nẵng", "Đà Lạt", "Ninh Bình"]
     var filteredDataCity = [String]()
     let searchController = UISearchController(searchResultsController: nil)
     
@@ -18,7 +19,7 @@ class TableViewController: UITableViewController, UISearchResultsUpdating {
         super.viewDidLoad()
         
         // Thiết lập bộ điều khiển tìm kiếm
-        tableView.tableHeaderView = searchController.searchBar
+        navigationItem.searchController = searchController
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search something"
@@ -55,4 +56,42 @@ class TableViewController: UITableViewController, UISearchResultsUpdating {
         return cell
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let detailViewController = segue.destination as? ViewController
+        if let indexPath = tableView.indexPathForSelectedRow {
+            if let index = arrayCity.index(of: filteredDataCity[indexPath.row]) {
+                detailViewController?.data = arrayCity[index]
+            }
+        }
+    }
+    
+    @IBAction func unwind(for unwindSegue: UIStoryboardSegue) {
+        if let sourceViewController = unwindSegue.source as? ViewController {
+            if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                if let index = arrayCity.index(of: filteredDataCity[selectedIndexPath.row]) {
+                    arrayCity[index] = sourceViewController.data!
+                    filteredDataCity = arrayCity
+                }
+            } else {
+                // Add a new hero
+                arrayCity.append(sourceViewController.data!)
+                filteredDataCity = arrayCity
+            }
+            tableView.reloadData()
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            if let index = arrayCity.index(of: filteredDataCity[indexPath.row]) {
+                arrayCity.remove(at: index)
+            }
+            filteredDataCity.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+        default:
+            print("Something")
+        }
+    }
 }

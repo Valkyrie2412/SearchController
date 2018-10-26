@@ -9,10 +9,17 @@
 import UIKit
 
 class ViewController: UIViewController {
+    @IBOutlet weak var textField: UITextField!
+    
+    var data: String?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        if data != nil {
+            textField.text = data
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -20,6 +27,8 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        data = textField.text
+    }
 }
 

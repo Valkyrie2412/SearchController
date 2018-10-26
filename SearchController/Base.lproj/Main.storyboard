@@ -6,6 +6,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -25,6 +27,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="ILO-Pv-72n" kind="show" id="DEg-Py-7IA"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -32,11 +37,62 @@
                             <outlet property="delegate" destination="LNX-cK-m0s" id="3ZR-qx-gsd"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="weB-pv-Les"/>
+                    <navigationItem key="navigationItem" id="weB-pv-Les">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="ZOy-0A-Jgq">
+                            <connections>
+                                <segue destination="ILO-Pv-72n" kind="show" id="jVm-oA-Yi8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BNN-de-XzO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1100" y="126.38680659670166"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="LJs-wz-T69">
+            <objects>
+                <viewController id="ILO-Pv-72n" customClass="ViewController" customModule="SearchController" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GYK-mB-vqa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eOO-ji-gIN">
+                                <rect key="frame" x="0.0" y="152" width="375" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gSg-dH-zD5">
+                                <rect key="frame" x="152.5" y="213" width="69" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" red="1" green="0.92426006504937397" blue="0.069646820372172291" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <connections>
+                                    <segue destination="kAz-3v-1xV" kind="unwind" unwindAction="unwindFor:" id="mn9-bQ-kDh"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.48418755470000002" green="0.51872018249999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="eOO-ji-gIN" firstAttribute="leading" secondItem="EmU-uu-8GB" secondAttribute="leading" id="UoE-cg-qHF"/>
+                            <constraint firstItem="gSg-dH-zD5" firstAttribute="centerY" secondItem="GYK-mB-vqa" secondAttribute="centerY" multiplier="0.7" id="VBg-kw-p5O"/>
+                            <constraint firstItem="eOO-ji-gIN" firstAttribute="centerY" secondItem="GYK-mB-vqa" secondAttribute="centerY" multiplier="0.5" id="Y16-Qv-29C"/>
+                            <constraint firstItem="eOO-ji-gIN" firstAttribute="centerX" secondItem="GYK-mB-vqa" secondAttribute="centerX" id="hpe-MR-9Gi"/>
+                            <constraint firstItem="EmU-uu-8GB" firstAttribute="trailing" secondItem="eOO-ji-gIN" secondAttribute="trailing" id="jx8-Ic-tIP"/>
+                            <constraint firstItem="gSg-dH-zD5" firstAttribute="centerX" secondItem="GYK-mB-vqa" secondAttribute="centerX" id="tda-ia-DZ4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="EmU-uu-8GB"/>
+                    </view>
+                    <connections>
+                        <outlet property="textField" destination="eOO-ji-gIN" id="ji1-Cc-Hdb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5DD-zL-aSg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="kAz-3v-1xV" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2079" y="126"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="evz-vp-pAF">
@@ -57,4 +113,7 @@
             <point key="canvasLocation" x="160.80000000000001" y="126.38680659670166"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="jVm-oA-Yi8"/>
+    </inferredMetricsTieBreakers>
 </document>
